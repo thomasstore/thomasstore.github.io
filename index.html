@@ -912,18 +912,40 @@
 
         <section class="quick-actions animate-right">
             <div class="action-card">
-                <div class="action-header">
-                    <div class="action-icon">⚡</div>
-                    <div class="action-title">Bayar Listrik PLN</div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nomor Meter / ID Pelanggan</label>
-                    <input type="text" class="form-input" placeholder="Contoh: 123456789012" id="plnNumber">
-                </div>
-                <button class="btn-action" onclick="checkBill('PLN')">
-                    <span id="plnBtnText">Cek Tagihan</span>
-                </button>
-            </div>
+    <div class="action-header">
+        <div class="action-icon">🖥️</div>
+        <div class="action-title">Langganan Hosting / VPS</div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Nama Pemesan</label>
+        <input type="text" class="form-input" id="hostingName" placeholder="Nama lengkap Anda">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Nama Server</label>
+        <input type="text" class="form-input" id="serverName" placeholder="Misalnya: server-ai-project">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Jenis Server</label>
+        <select class="form-input" id="serverType">
+            <option value="">Pilih jenis server</option>
+            <option value="Shared Hosting">Shared Hosting</option>
+            <option value="Pterodactyl">Pterodactyl Panel</option>
+            <option value="VPS">VPS Mandiri</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Metode Pembayaran</label>
+        <select class="form-input" id="paymentMethod">
+            <option value="">Pilih metode</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+            <option value="E-Wallet">E-Wallet (DANA, OVO, GoPay)</option>
+            <option value="QRIS">QRIS</option>
+        </select>
+    </div>
+    <button class="btn-action" onclick="sendHostingRequest()">
+        Kirim ke WhatsApp
+    </button>
+</div>
 
             <div class="action-card">
                 <div class="action-header">
@@ -951,39 +973,32 @@
             </div>
 
             <div class="action-card">
-                <div class="action-header">
-                    <div class="action-icon">💳</div>
-                    <div class="action-title">Top Up E-Wallet</div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Pilih E-Wallet</label>
-                    <select class="form-input" id="ewalletType">
-                        <option value="">Pilih E-Wallet</option>
-                        <option value="gopay">GoPay</option>
-                        <option value="ovo">OVO</option>
-                        <option value="dana">DANA</option>
-                        <option value="shopeepay">ShopeePay</option>
-                        <option value="linkaja">LinkAja</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nomor E-Wallet</label>
-                    <input type="text" class="form-input" placeholder="08XXXXXXXXXX" id="ewalletNumber">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nominal Top Up</label>
-                    <select class="form-input" id="ewalletAmount">
-                        <option value="">Pilih Nominal</option>
-                        <option value="20000">Rp 20.000</option>
-                        <option value="50000">Rp 50.000</option>
-                        <option value="100000">Rp 100.000</option>
-                        <option value="200000">Rp 200.000</option>
-                        <option value="500000">Rp 500.000</option>
-                    </select>
-                </div>
-                <button class="btn-action" onclick="topupEwallet()">
-                    <span id="ewalletBtnText">Top Up Sekarang</span>
-                </button>
+    <div class="action-header">
+        <div class="action-icon">🌐</div>
+        <div class="action-title">Pilih Platform</div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Jenis Platform</label>
+        <select class="form-input" id="platformType" onchange="handlePlatformChange()">
+            <option value="">Pilih</option>
+            <option value="app">Aplikasi</option>
+            <option value="web">Website</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Hero Name</label>
+        <input type="text" class="form-input" id="heroName" placeholder="Masukkan nama hero (judul besar)">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Nav Name</label>
+        <input type="text" class="form-input" id="navName" placeholder="Masukkan nama navigasi utama">
+    </div>
+    <div class="form-group" id="platformOptionsContainer" style="display: none;">
+        <label class="form-label" id="platformOptionsLabel">Opsi</label>
+        <select class="form-input" id="platformOptions"></select>
+    </div>
+    <button class="btn-action" onclick="sendPlatformToWhatsApp()">Kirim ke WhatsApp</button>
+</div>
             </div>
         </section>
 
@@ -993,47 +1008,15 @@
                 <a href="#" class="view-all">Lihat Semua →</a>
             </div>
             <div id="transactionsList">
-                <div class="transaction-item">
-                    <div class="transaction-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">📱</div>
-                    <div class="transaction-info">
-                        <div class="transaction-title">Pulsa Telkomsel</div>
-                        <div class="transaction-date">Hari ini, 14:30</div>
-                    </div>
-                    <div class="transaction-amount amount-negative">-Rp 25.000</div>
-                </div>
-                <div class="transaction-item">
-                    <div class="transaction-icon" style="background: linear-gradient(135deg, #45b7d1, #096dd9);">⚡</div>
-                    <div class="transaction-info">
-                        <div class="transaction-title">Token PLN</div>
-                        <div class="transaction-date">Kemarin, 09:15</div>
-                    </div>
-                    <div class="transaction-amount amount-negative">-Rp 150.000</div>
-                </div>
-                <div class="transaction-item">
-                    <div class="transaction-icon" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">💳</div>
-                    <div class="transaction-info">
-                        <div class="transaction-title">Top Up Saldo</div>
-                        <div class="transaction-date">2 hari lalu, 16:45</div>
-                    </div>
-                    <div class="transaction-amount amount-positive">+Rp 500.000</div>
-                </div>
-                <div class="transaction-item">
-                    <div class="transaction-icon" style="background: linear-gradient(135deg, #96ceb4, #3dd5f3);">💧</div>
-                    <div class="transaction-info">
-                        <div class="transaction-title">PDAM Jakarta</div>
-                        <div class="transaction-date">3 hari lalu, 11:20</div>
-                    </div>
-                    <div class="transaction-amount amount-negative">-Rp 85.000</div>
-                </div>
-                <div class="transaction-item">
-                    <div class="transaction-icon" style="background: linear-gradient(135deg, #feca57, #ff9ff3);">🏥</div>
-                    <div class="transaction-info">
-                        <div class="transaction-title">BPJS Kesehatan</div>
-                        <div class="transaction-date">1 minggu lalu, 08:30</div>
-                    </div>
-                    <div class="transaction-amount amount-negative">-Rp 42.000</div>
-                </div>
-            </div>
+    <div class="transaction-item">
+        <div class="transaction-icon" style="background: linear-gradient(135deg, #45b7d1, #096dd9);">🕒</div>
+        <div class="transaction-info">
+            <div class="transaction-title">You have visited this site</div>
+            <div class="transaction-date">Just now</div>
+        </div>
+        <div class="transaction-amount amount-positive">Info</div>
+    </div>
+</div>
         </section>
     </main>
 
@@ -1106,20 +1089,6 @@
                 }
             }
         }
-
-        // Auto-format phone numbers
-        document.getElementById('ewalletNumber').addEventListener('input', function(e) {
-            formatPhoneNumber(e.target);
-        });
-
-        // PLN Number validation
-        document.getElementById('plnNumber').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length <= 12) {
-                e.target.value = value;
-            }
-        });
-
         // Enhanced Notification System
         function showNotification(title, message, type = 'success') {
             const notification = document.getElementById('notification');
@@ -1164,31 +1133,23 @@
             };
         }
 
-        function checkBill(type) {
-            const plnNumber = document.getElementById('plnNumber').value;
-            
-            if (!plnNumber || plnNumber.length < 11) {
-                showNotification('Data Tidak Lengkap', 'Mohon masukkan nomor meter PLN yang valid (minimal 11 digit)', 'warning');
-                return;
-            }
+        function sendHostingRequest() {
+    const name = document.getElementById('hostingName').value.trim();
+    const server = document.getElementById('serverName').value.trim();
+    const serverType = document.getElementById('serverType').value;
+    const payment = document.getElementById('paymentMethod').value;
 
-            const resetLoading = addLoadingState('plnBtnText', '🔄 Mengecek Tagihan...');
-            
-            // Simulate API call
-            setTimeout(() => {
-                resetLoading();
-                showNotification('Tagihan Ditemukan', `Tagihan PLN untuk ${plnNumber}: Rp 165.000. Silakan lanjut ke pembayaran.`, 'success');
-                
-                // Add transaction to list
-                addTransactionToList({
-                    icon: '⚡',
-                    title: 'Cek Tagihan PLN',
-                    date: 'Baru saja',
-                    amount: 0,
-                    type: 'check'
-                });
-            }, 2000);
-        }
+    if (!name || !server || !serverType || !payment) {
+        showNotification('Data Belum Lengkap', 'Mohon lengkapi semua form terlebih dahulu', 'warning');
+        return;
+    }
+
+    const message = `Halo Admin 👋\n\nSaya ingin langganan *Hosting / VPS* dengan detail berikut:\n\n👤 Nama: *${name}*\n🖥️ Server: *${server}*\n📦 Jenis: *${serverType}*\n💳 Pembayaran: *${payment}*\n\nMohon informasi lanjut ya 🙏`;
+
+    const waURL = `https://wa.me/6281274945189?text=${encodeURIComponent(message)}`;
+    window.open(waURL, '_blank');
+}
+
 
     function sendToWhatsApp() {
     const name = document.getElementById('customerName').value.trim();
@@ -1214,52 +1175,53 @@
     window.open(waURL, '_blank');
 }
 
-        function topupEwallet() {
-            const ewalletType = document.getElementById('ewalletType').value;
-            const ewalletNumber = document.getElementById('ewalletNumber').value;
-            const amount = document.getElementById('ewalletAmount').value;
-            
-            if (!ewalletType) {
-                showNotification('Pilih E-Wallet', 'Mohon pilih jenis e-wallet terlebih dahulu', 'warning');
-                return;
-            }
-            
-            if (!ewalletNumber || ewalletNumber.length < 11) {
-                showNotification('Data Tidak Lengkap', 'Mohon masukkan nomor e-wallet yang valid', 'warning');
-                return;
-            }
-            
-            if (!amount) {
-                showNotification('Pilih Nominal', 'Mohon pilih nominal top up', 'warning');
-                return;
-            }
+        function handlePlatformChange() {
+    const type = document.getElementById('platformType').value;
+    const options = document.getElementById('platformOptions');
+    const container = document.getElementById('platformOptionsContainer');
+    const label = document.getElementById('platformOptionsLabel');
 
-            const resetLoading = addLoadingState('ewalletBtnText', '🔄 Memproses Top Up...');
-            
-            setTimeout(() => {
-                resetLoading();
-                const ewalletName = ewalletType.charAt(0).toUpperCase() + ewalletType.slice(1);
-                showNotification('Top Up Berhasil', `Top up ${ewalletName} sebesar ${formatCurrency(parseInt(amount))} berhasil diproses`, 'success');
-                
-                updateBalance(-parseInt(amount));
-                
-                addTransactionToList({
-                    icon: '💳',
-                    title: `Top Up ${ewalletName}`,
-                    date: 'Baru saja',
-                    amount: -parseInt(amount),
-                    type: 'debit'
-                });
-                
-                // Reset form
-                document.getElementById('ewalletType').value = '';
-                document.getElementById('ewalletNumber').value = '';
-                document.getElementById('ewalletAmount').value = '';
-            }, 2000);
-        }
-        function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    options.innerHTML = '';
+
+    if (type === 'app') {
+        label.textContent = 'Jenis Layanan Aplikasi';
+        ['Pulsa', 'Data', 'DANA', 'ShopeePay', 'Gopay'].forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt;
+            options.appendChild(option);
+        });
+    } else if (type === 'web') {
+        label.textContent = 'Jenis Website';
+        ['Portfolio', 'Landing Page', 'Web Profile', 'Company Profile', 'Storefront'].forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt;
+            options.appendChild(option);
+        });
+    }
+
+    container.style.display = type ? 'block' : 'none';
 }
+
+function sendPlatformToWhatsApp() {
+    const platformType = document.getElementById('platformType').value;
+    const hero = document.getElementById('heroName').value.trim();
+    const nav = document.getElementById('navName').value.trim();
+    const selectedOption = document.getElementById('platformOptions').value;
+
+    if (!platformType || !hero || !nav || !selectedOption) {
+        showNotification('Lengkapi Form', 'Semua field wajib diisi terlebih dahulu', 'warning');
+        return;
+    }
+
+    const jenis = platformType === 'app' ? 'Aplikasi' : 'Website';
+    const message = `Halo Admin 👋\n\nSaya ingin membuat ${jenis} dengan rincian:\n\n🔥 Hero Title: *${hero}*\n🔗 Nav Name: *${nav}*\n📌 Jenis: *${selectedOption}*\n\nMohon infonya lebih lanjut ya 🙏`;
+
+    const waURL = `https://wa.me/6281274945189?text=${encodeURIComponent(message)}`;
+    window.open(waURL, '_blank');
+}
+
 
 function formatRupiah(angka) {
     return 'Rp ' + parseInt(angka).toLocaleString('id-ID');
