@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamePay PPOB - Top Up Game Online Terpercaya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: #ffffff;
+            border-radius: 2px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 15px rgba(240, 147, 251, 0.4)); }
+            to { filter: drop-shadow(0 0 25px rgba(79, 172, 254, 0.6)); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 14px 28px;
+            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.95rem;
+        }
+
+        .filter-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .filter-tab:hover::before {
+            left: 100%;
+        }
+
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: #333333;
+            border-color: #666666;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 25px;
+            padding: 30px;
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .game-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .game-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .game-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-developer {
+            color: #cccccc;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .game-description {
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .service-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .service-tag {
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tag.diamonds {
+            background: #666666;
+            color: white;
+            border-color: transparent;
+        }
+
+        .tag.uc {
+            background: #666666;
+            color: white;
+            border-color: transparent;
+        }
+
+        .tag.voucher {
+            background: #666666;
+            color: white;
+            border-color: transparent;
+        }
+
+        .tag.cp {
+            background: #666666;
+            color: white;
+            border-color: transparent;
+        }
+
+        .tag.shells {
+            background: #666666;
+            color: white;
+            border-color: transparent;
+        }
+
+        .tag.promo {
+            background: #333333;
+            color: white;
+            border-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .coming-soon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+        }
+
+        .coming-soon-badge {
+            background: #666666;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+            animation: bounce 2s infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
+        .coming-soon-text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-align: center;
+            max-width: 200px;
+        }
+
+        .pricing-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .price-range {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .price-value {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .discount-badge {
+            background: #333333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #333333;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.4s ease;
+            max-width: 300px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filter-tabs {
+                gap: 10px;
+            }
+
+            .filter-tab {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .game-card {
+                padding: 25px;
+            }
+
+            .stats-bar {
+                gap: 20px;
+            }
+
+            .stat-item {
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .game-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .game-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GamePay PPOB</h1>
+            <p class="subtitle">Platform Top Up Game Online Terpercaya #1 di Indonesia</p>
+            <p class="tagline">Cepat, Murah, dan Aman - 24/7 Siap Melayani</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">50K+</div>
+                <div class="stat-label">Transaksi Berhasil</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Customer Support</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Aman & Terpercaya</div>
+            </div>
+        </div>
+
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">🎮 Semua Game</div>
+            <div class="filter-tab" data-filter="moba">⚔️ MOBA</div>
+            <div class="filter-tab" data-filter="battle-royale">🔫 Battle Royale</div>
+            <div class="filter-tab" data-filter="rpg">🏰 RPG</div>
+            <div class="filter-tab" data-filter="promo">🔥 Promo Spesial</div>
+        </div>
+
+        <div class="games-grid" id="gamesGrid">
+            <!-- Games will be populated here -->
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-title">GamePay PPOB</div>
+        <div class="notification-message">Sistem pembayaran sedang dalam tahap pengembangan</div>
+    </div>
+
+    <script>
+        // Data game untuk PPOB top up
+        const gameData = [
+            {
+                id: 1,
+                title: "Mobile Legends",
+                developer: "Moonton",
+                description: "Top up Diamond Mobile Legends dengan harga termurah dan proses tercepat. Dapatkan diamond favorit kamu sekarang!",
+                icon: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=60&h=60&fit=crop",
+                services: ["diamonds", "promo"],
+                category: "moba",
+                priceRange: {
+                    min: "Rp 15.000",
+                    max: "Rp 1.500.000"
+                },
+                discount: "15%",
+                comingSoon: true
+            },
+            {
+                id: 2,
+                title: "PUBG Mobile",
+                developer: "Tencent Games",
+                description: "Beli UC PUBG Mobile murah dan cepat. Berbagai nominal UC tersedia dengan bonus menarik setiap pembelian.",
+                icon: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=60&h=60&fit=crop",
+                services: ["uc", "promo"],
+                category: "battle-royale",
+                priceRange: {
+                    min: "Rp 16.000",
+                    max: "Rp 2.000.000"
+                },
+                discount: "10%",
+                comingSoon: true
+            },
+            {
+                id: 3,
+                title: "Free Fire",
+                developer: "Garena",
+                description: "Top up Diamond Free Fire dengan proses instan dan harga terjangkau. Support semua metode pembayaran populer.",
+                icon: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=60&h=60&fit=crop",
+                services: ["diamonds", "promo"],
+                category: "battle-royale",
+                priceRange: {
+                    min: "Rp 10.000",
+                    max: "Rp 1.200.000"
+                },
+                discount: "20%",
+                comingSoon: true
+            },
+            {
+                id: 4,
+                title: "Genshin Impact",
+                developer: "miHoYo",
+                description: "Beli Genesis Crystal dan Welkin Moon dengan mudah. Dapatkan character dan weapon impian kamu di Genshin!",
+                icon: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=60&h=60&fit=crop",
+                services: ["voucher", "promo"],
+                category: "rpg",
+                priceRange: {
+                    min: "Rp 65.000",
+                    max: "Rp 1.600.000"
+                },
+                discount: "5%",
+                comingSoon: true
+            },
+            {
+                id: 5,
+                title: "Call of Duty Mobile",
+                developer: "Activision",
+                description: "Top up CP (COD Points) untuk battle pass, skin weapon, dan character terbaru. Proses cepat dan aman.",
+                icon: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=60&h=60&fit=crop",
+                services: ["cp", "promo"],
+                category: "battle-royale",
+                priceRange: {
+                    min: "Rp 15.000",
+                    max: "Rp 800.000"
+                },
+                discount: "12%",
+                comingSoon: true
+            },
+            {
+                id: 6,
+                title: "League of Legends: Wild Rift",
+                developer: "Riot Games",
+                description: "Beli Wild Cores untuk skin champion, battle pass, dan item eksklusif. Mainkan game MOBA terbaik di smartphone!",
+                icon: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=60&h=60&fit=crop",
+                services: ["voucher"],
+                category: "moba",
+                priceRange: {
+                    min: "Rp 20.000",
+                    max: "Rp 1.000.000"
+                },
+                discount: "8%",
+                comingSoon: true
+            },
+            {
+                id: 7,
+                title: "Valorant",
+                developer: "Riot Games",
+                description: "Top up Valorant Points untuk battle pass, skin weapon premium, dan bundle eksklusif. Agent siap beraksi!",
+                icon: "https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=60&h=60&fit=crop",
+                services: ["voucher"],
+                category: "fps",
+                priceRange: {
+                    min: "Rp 25.000",
+                    max: "Rp 1.500.000"
+                },
+                discount: "7%",
+                comingSoon: true
+            },
+            {
+                id: 8,
+                title: "Honkai: Star Rail",
+                developer: "miHoYo",
+                description: "Beli Oneiric Shard untuk gacha character dan light cone terbaru. Jelajahi galaksi dengan kekuatan penuh!",
+                icon: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=60&h=60&fit=crop",
+                services: ["voucher", "promo"],
+                category: "rpg",
+                priceRange: {
+                    min: "Rp 65.000",
+                    max: "Rp 1.600.000"
+                },
+                discount: "15%",
+                comingSoon: true
+            },
+            {
+                id: 9,
+                title: "Clash of Clans",
+                developer: "Supercell",
+                description: "Top up Gems COC untuk upgrade cepat, builder baru, dan resource unlimited. Bangun desa terkuat!",
+                icon: "https://images.unsplash.com/photo-1556438064-2d7646166914?w=60&h=60&fit=crop",
+                services: ["shells", "promo"],
+                category: "strategy",
+                priceRange: {
+                    min: "Rp 15.000",
+                    max: "Rp 1.200.000"
+                },
+                discount: "18%",
+                comingSoon: true
+            }
+        ];
+
+        let currentFilter = 'all';
+        let filteredGames = [...gameData];
+
+        function renderGames(games) {
+            const gamesGrid = document.getElementById('gamesGrid');
+            gamesGrid.innerHTML = '';
+
+            games.forEach(game => {
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                gameCard.innerHTML = `
+                    <div class="game-header">
+                        <img src="${game.icon}" alt="${game.title}" class="game-icon">
+                        <div class="game-info">
+                            <h3 class="game-title">${game.title}</h3>
+                            <p class="game-developer">${game.developer}</p>
+                        </div>
+                    </div>
+                    <p class="game-description">${game.description}</p>
+                    <div class="service-tags">
+                        ${game.services.map(service => `<span class="service-tag tag ${service}">${getServiceLabel(service)}</span>`).join('')}
+                    </div>
+                    
+                    ${!game.comingSoon ? `
+                    <div class="pricing-preview">
+                        <div class="price-range">
+                            <span class="price-label">Mulai dari:</span>
+                            <span class="price-value">${game.priceRange.min}</span>
+                        </div>
+                        <div class="price-range">
+                            <span class="price-label">Maksimal:</span>
+                            <span class="price-value">${game.priceRange.max}</span>
+                        </div>
+                        ${game.discount ? `
+                        <div style="text-align: center; margin-top: 10px;">
+                            <span class="discount-badge">DISKON ${game.discount}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    ` : ''}
+                    
+                    ${game.comingSoon ? `
+                    <div class="coming-soon-overlay">
+                        <div class="coming-soon-badge">Coming Soon</div>
+                        <p class="coming-soon-text">Layanan top up akan segera tersedia</p>
+                    </div>
+                    ` : ''}
+                `;
+
+                gameCard.addEventListener('click', () => {
+                    if (!game.comingSoon) {
+                        showNotification('Top Up Service', `Mengarahkan ke halaman top up ${game.title}...`);
+                        // Redirect ke halaman top up specific game
+                        setTimeout(() => {
+                            console.log(`Redirecting to ${game.title} top up page...`);
+                        }, 1000);
+                    } else {
+                        showNotification('Coming Soon', `Layanan top up ${game.title} akan segera hadir!`);
+                    }
+                });
+
+                gamesGrid.appendChild(gameCard);
+            });
+        }
+
+        function getServiceLabel(service) {
+            const labels = {
+                'diamonds': '💎 Diamond',
+                'uc': '🪙 UC',
+                'voucher': '🎫 Voucher',
+                'cp': '⚡ CP',
+                'shells': '🐚 Gems',
+                'promo': '🔥 PROMO'
+            };
+            return labels[service] || service;
+        }
+
+        function filterGames(filter) {
+            if (filter === 'all') {
+                filteredGames = [...gameData];
+            } else if (filter === 'promo') {
+                filteredGames = gameData.filter(game => 
+                    game.services.includes('promo')
+                );
+            } else {
+                filteredGames = gameData.filter(game => 
+                    game.category === filter
+                );
+            }
+            
+            renderGames(filteredGames);
+        }
+
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            const titleEl = notification.querySelector('.notification-title');
+            const messageEl = notification.querySelector('.notification-message');
+            
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Event listeners
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Filter games
+                const filter = tab.dataset.filter;
+                currentFilter = filter;
+                filterGames(filter);
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGames(gameData);
+            
+            // Show welcome notification
+            setTimeout(() => {
+                showNotification('Selamat Datang!', 'Platform PPOB GamePay sedang dalam pengembangan. Stay tuned!');
+            }, 2000);
+        });
+
+        // Future API integration untuk mendapatkan harga real-time
+        async function loadPricingFromAPI() {
+            try {
+                // const response = await fetch('YOUR_PRICING_API_ENDPOINT');
+                // const pricing = await response.json();
+                // Update pricing data
+                console.log('Ready for pricing API integration');
+            } catch (error) {
+                console.error('Failed to load pricing:', error);
+                showNotification('Error', 'Gagal memuat harga terbaru');
+            }
+        }
+
+        // Function untuk integrasi payment gateway
+        function initiateTopUp(gameId, amount) {
+            // Integration dengan payment gateway seperti Midtrans, Xendit, dll
+            console.log(`Initiating top up for game ${gameId} with amount ${amount}`);
+            showNotification('Processing', 'Mengarahkan ke halaman pembayaran...');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThomasPay - Advanced PPOB Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="main-bg"></div>
+    
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <div class="logo-icon">💳</div>
+                    ThomasPay
+                </div>
+                <div class="nav-menu">
+                    <a href="#" class="nav-item">Beranda</a>
+                    <a href="#" class="nav-item">Layanan</a>
+                    <a href="#" class="nav-item">Riwayat</a>
+                    <a href="#" class="nav-item">Bantuan</a>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">JD</div>
+                    <span class="user-name">John Doe</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Thomas Real Store</h1>
+            <p class="hero-subtitle">Kelola semua pembayaran digital Anda dalam satu platform yang aman, cepat, dan terpercaya</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="balance-section">
+            <div class="balance-card animate-up">
+                <div class="balance-header">
+                    <div class="balance-info">
+                        <h3>Total Saldo</h3>
+                        <div class="balance-amount" id="balance">Rp 0</div>
+                    </div>
+                    <div class="balance-actions">
+                        <button class="btn-balance btn-primary" onclick="showNotification('Top Up', 'Fitur top up akan segera tersedia')">
+                            <span>💰</span> Top Up
+                        </button>
+                        <button class="btn-balance btn-secondary" onclick="showNotification('Riwayat', 'Menampilkan riwayat transaksi...')">
+                            <span>📊</span> Riwayat
+                        </button>
+                    </div>
+                </div>
+                <div class="balance-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">10</div>
+                        <div class="stat-label">Transaksi Bulan Ini</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">21</div>
+                        <div class="stat-label">Total Transaksi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Layanan Aktif</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services-section animate-up">
+            <div class="section-header">
+                <h2 class="section-title">Layanan Unggulan</h2>
+                <a href="#" class="view-all">Lihat Semua →</a>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" onclick="selectService('Pulsa & Data')">
+                    <a href="pulse.html">
+                    <div class="service-icon">📱</div>
+                    <div class="service-name">Pulsa</div>
+                    <div class="service-desc">Isi pulsa dan paket data</div>
+                </div></a>
+                <div class="service-card" onclick="selectService('Pulsa & Data')">
+                    <a href="data.html">
+                    <div class="service-icon">📱</div>
+                    <div class="service-name">Data</div>
+                    <div class="service-desc">Isi pulsa dan paket data</div>
+                </div></a>
+                <div class="service-card" onclick="selectService('Gaming')">
+                    <a href="game.html">
+                        <div class="service-icon">🎮</div>
+                        <div class="service-name">Gaming</div>
+                        <div class="service-desc">Voucher game online</div>
+                </div></a>
+                <div class="service-card" onclick="selectService('PLN')">
+                    <div class="service-icon">⚡</div>
+                    <div class="service-name">PLN</div>
+                    <div class="service-desc">Token listrik & tagihan</div>
+                </div>
+                <div class="service-card" onclick="selectService('PDAM')">
+                    <div class="service-icon">💧</div>
+                    <div class="service-name">PDAM</div>
+                    <div class="service-desc">Tagihan air daerah</div>
+                </div>
+                <div class="service-card" onclick="selectService('BPJS')">
+                    <div class="service-icon">🏥</div>
+                    <div class="service-name">BPJS</div>
+                    <div class="service-desc">Kesehatan & ketenagakerjaan</div>
+                </div>
+                <div class="service-card" onclick="selectService('Internet & TV')">
+                    <div class="service-icon">📺</div>
+                    <div class="service-name">Internet & TV</div>
+                    <div class="service-desc">Paket berlangganan</div>
+                </div>
+                <div class="service-card" onclick="selectService('E-Wallet')">
+                    <div class="service-icon">💳</div>
+                    <div class="service-name">E-Wallet</div>
+                    <div class="service-desc">Top up dompet digital</div>
+                </div>
+                <div class="service-card" onclick="selectService('Streaming')">
+                    <div class="service-icon">🎬</div>
+                    <div class="service-name">Streaming</div>
+                    <div class="service-desc">Netflix, Spotify, dll</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-actions animate-right">
+            <div class="action-card">
+    <div class="action-header">
+        <div class="action-icon">🖥️</div>
+        <div class="action-title">Langganan Hosting / VPS</div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Nama Pemesan</label>
+        <input type="text" class="form-input" id="hostingName" placeholder="Nama lengkap Anda">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Nama Server</label>
+        <input type="text" class="form-input" id="serverName" placeholder="Misalnya: server-ai-project">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Jenis Server</label>
+        <select class="form-input" id="serverType">
+            <option value="">Pilih jenis server</option>
+            <option value="Shared Hosting">Shared Hosting</option>
+            <option value="Pterodactyl">Pterodactyl Panel</option>
+            <option value="VPS">VPS Mandiri</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Metode Pembayaran</label>
+        <select class="form-input" id="paymentMethod">
+            <option value="">Pilih metode</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+            <option value="E-Wallet">E-Wallet (DANA, OVO, GoPay)</option>
+            <option value="QRIS">QRIS</option>
+        </select>
+    </div>
+    <button class="btn-action" onclick="sendHostingRequest()">
+        Kirim ke WhatsApp
+    </button>
+</div>
+
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon">🤖</div>
+                    <div class="action-title">Bot WhatsApp - Daftar Harga</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nama Anda</label>
+                    <input type="text" class="form-input" placeholder="Masukkan nama lengkap" id="customerName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pilih Paket Bot WA</label>
+                    <select class="form-input" id="botPackage">
+                        <option value="">Pilih Paket</option>
+                        <option value="basic|50000">Bot Basic - Rp 50.000/bulan</option>
+                        <option value="premium|100000">Bot Premium - Rp 100.000/bulan</option>
+                        <option value="enterprise|200000">Bot Enterprise - Rp 200.000/bulan</option>
+                        <option value="custom|300000">Bot Custom - Rp 300.000/bulan</option>
+                        <option value="yearly|500000">Paket Tahunan - Rp 500.000/tahun</option>
+                    </select>
+                </div>
+                <button class="btn-action" onclick="sendToWhatsApp()">
+                    <span id="botBtnText">Kirim ke WhatsApp</span>
+                </button>
+            </div>
+
+            <div class="action-card">
+    <div class="action-header">
+        <div class="action-icon">🌐</div>
+        <div class="action-title">Pilih Platform</div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Jenis Platform</label>
+        <select class="form-input" id="platformType" onchange="handlePlatformChange()">
+            <option value="">Pilih</option>
+            <option value="app">Aplikasi</option>
+            <option value="web">Website</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Hero Name</label>
+        <input type="text" class="form-input" id="heroName" placeholder="Masukkan nama hero (judul besar)">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Nav Name</label>
+        <input type="text" class="form-input" id="navName" placeholder="Masukkan nama navigasi utama">
+    </div>
+    <div class="form-group" id="platformOptionsContainer" style="display: none;">
+        <label class="form-label" id="platformOptionsLabel">Opsi</label>
+        <select class="form-input" id="platformOptions"></select>
+    </div>
+    <button class="btn-action" onclick="sendPlatformToWhatsApp()">Kirim ke WhatsApp</button>
+</div>
+            </div>
+        </section>
+
+        <section class="transactions-section animate-up">
+            <div class="section-header">
+                <h2 class="section-title">Transaksi Terbaru</h2>
+                <a href="#" class="view-all">Lihat Semua →</a>
+            </div>
+            <div id="transactionsList">
+    <div class="transaction-item">
+        <div class="transaction-icon" style="background: linear-gradient(135deg, #45b7d1, #096dd9);">🕒</div>
+        <div class="transaction-info">
+            <div class="transaction-title">You have visited this site</div>
+            <div class="transaction-date">Just now</div>
+        </div>
+        <div class="transaction-amount amount-positive">Info</div>
+    </div>
+</div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ThomasPay</h3>
+                    <p>Platform pembayaran digital terdepan yang menghadirkan kemudahan transaksi untuk semua kebutuhan Anda.</p>
+                    <p style="margin-top: 15px;">🔒 Aman • ⚡ Cepat • 🎯 Terpercaya</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan</h3>
+                    <p><a href="#">Pulsa & Paket Data</a></p>
+                    <p><a href="#">PLN & Token Listrik</a></p>
+                    <p><a href="#">PDAM & Air</a></p>
+                    <p><a href="#">BPJS & Asuransi</a></p>
+                    <p><a href="#">Internet & TV Kabel</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Bantuan</h3>
+                    <p><a href="#">Pusat Bantuan</a></p>
+                    <p><a href="#">FAQ</a></p>
+                    <p><a href="#">Hubungi Kami</a></p>
+                    <p><a href="#">Syarat & Ketentuan</a></p>
+                    <p><a href="#">Kebijakan Privasi</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <p>📞 Call Center: 081274945189</p>
+                    <p>📧 Email: christmassonglyric@gmail.com</p>
+                    <p>💬 Live Chat: 24/7</p>
+                    <p>🕒 Layanan: Senin - Minggu</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 ThomasPay. Seluruh hak cipta dilindungi undang-undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="notification" id="notification">
+        <div class="notification-header">
+            <div class="notification-icon" id="notifIcon">✓</div>
+            <div class="notification-title" id="notifTitle">Berhasil</div>
+        </div>
+        <div class="notification-message" id="notifMessage">Pesan notifikasi</div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

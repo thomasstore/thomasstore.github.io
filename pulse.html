@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPOB Pulsa - AI Powered</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a0a;
+            --secondary: #1a1a1a;
+            --accent: #2d2d2d;
+            --text: #ffffff;
+            --text-dim: #a0a0a0;
+            --border: #333333;
+            --success: #00ff88;
+            --error: #ff4757;
+            --glow: rgba(0, 255, 136, 0.3);
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* AI Neural Network Background */
+        .neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .neural-node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .neural-connection {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--success), transparent);
+            transform-origin: left;
+            animation: flow 4s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        @keyframes flow {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Main Container */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+
+        /* Header */
+        .app-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ai-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--success), #00cc6a);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .brand h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-dim);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            display: grid;
+            place-items: center;
+        }
+
+        .transaction-panel {
+            width: 100%;
+            max-width: 600px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transaction-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--success), transparent);
+            animation: scan 3s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -50%; }
+            100% { left: 50%; }
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Phone Input */
+        .phone-input-container {
+            position: relative;
+        }
+
+        .phone-input {
+            width: 100%;
+            background: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            font-size: 1.125rem;
+            color: var(--text);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .phone-input:focus {
+            outline: none;
+            border-color: var(--success);
+            box-shadow: 0 0 0 4px var(--glow);
+        }
+
+        .phone-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        /* Provider Detection */
+        .provider-detection {
+            margin-top: 1rem;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .provider-detection.active {
+            display: flex;
+            animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .provider-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--success);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .provider-info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .provider-info p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Denomination Grid */
+        .denomination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+
+        .denomination-card {
+            background: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .denomination-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .denomination-card:hover::before {
+            opacity: 1;
+        }
+
+        .denomination-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--success);
+            box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+        }
+
+        .denomination-card.selected {
+            border-color: var(--success);
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .denomination-value {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .denomination-price {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-bottom: 0.25rem;
+        }
+
+        .denomination-tax {
+            font-size: 0.75rem;
+            color: var(--success);
+        }
+
+        /* Action Button */
+        .action-button {
+            width: 100%;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            cursor: not-allowed;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-button.active {
+            background: linear-gradient(135deg, var(--success), #00cc6a);
+            color: var(--primary);
+            cursor: pointer;
+            border-color: var(--success);
+        }
+
+        .action-button.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 255, 136, 0.4);
+        }
+
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .action-button.active:hover::before {
+            left: 100%;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+            animation: modalFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 480px;
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .receipt-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .receipt-header p {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+        }
+
+        .receipt-items {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+        }
+
+        .receipt-item:not(:last-child) {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .receipt-item.total {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--success);
+        }
+
+        .customer-input {
+            width: 100%;
+            background: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .customer-input:focus {
+            outline: none;
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px var(--glow);
+        }
+
+        .modal-actions {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+        }
+
+        .modal-button {
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .cancel-btn {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        .cancel-btn:hover {
+            background: var(--border);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border-color: #25D366;
+        }
+
+        .whatsapp-btn:hover {
+            background: #20ba5a;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 1.5rem 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .transaction-panel {
+                padding: 2rem 1.5rem;
+            }
+
+            .denomination-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .denomination-card {
+                padding: 1.25rem 1rem;
+            }
+
+            .modal-content {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .modal-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .denomination-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Neural Network Background -->
+    <div class="neural-bg" id="neuralBg"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="brand">
+                    <div class="ai-icon">🧠</div>
+                    <div>
+                        <h1>Thomasstore</h1>
+                        <div class="ai-status">
+                            <div class="status-dot"></div>
+                            <span>Pulse Transaction</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="transaction-panel">
+                <!-- Phone Number Section -->
+                <div class="form-section">
+                    <div class="section-title">Target Number</div>
+                    <div class="phone-input-container">
+                        <input 
+                            type="tel" 
+                            id="phoneInput" 
+                            class="phone-input"
+                            placeholder="08XX XXXX XXXX"
+                            maxlength="13"
+                        >
+                        <div id="providerDetection" class="provider-detection">
+                            <div class="provider-icon">📡</div>
+                            <div class="provider-info">
+                                <h4 id="providerName">Detecting...</h4>
+                                <p>Neural network analyzing...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Denomination Selection -->
+                <div class="form-section">
+                    <div class="section-title">Select Amount</div>
+                    <div class="denomination-grid" id="denominationGrid">
+                        <div class="denomination-card" data-value="10000">
+                            <div class="denomination-value">10K</div>
+                            <div class="denomination-price">Rp 11,200</div>
+                            <div class="denomination-tax">Tax included</div>
+                        </div>
+                        <div class="denomination-card" data-value="20000">
+                            <div class="denomination-value">20K</div>
+                            <div class="denomination-price">Rp 21,200</div>
+                            <div class="denomination-tax">Tax included</div>
+                        </div>
+                        <div class="denomination-card" data-value="30000">
+                            <div class="denomination-value">30K</div>
+                            <div class="denomination-price">Rp 31,200</div>
+                            <div class="denomination-tax">Tax included</div>
+                        </div>
+                        <div class="denomination-card" data-value="50000">
+                            <div class="denomination-value">50K</div>
+                            <div class="denomination-price">Rp 51,200</div>
+                            <div class="denomination-tax">Tax included</div>
+                        </div>
+                        <div class="denomination-card" data-value="100000">
+                            <div class="denomination-value">100K</div>
+                            <div class="denomination-price">Rp 101,200</div>
+                            <div class="denomination-tax">Tax included</div>
+                        </div>
+                        <div class="denomination-card" data-value="200000">
+                            <div class="denomination-value">200K</div>
+                            <div class="denomination-price">Rp 201,200</div>
+                            <div class="denomination-tax">Tax included</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button id="processButton" class="action-button">
+                    Initialize Transaction
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <div class="receipt-header">
+                <h3>Transaction Receipt</h3>
+                <p>Generated by AI Neural System</p>
+            </div>
+            
+            <div class="receipt-items">
+                <div class="receipt-item">
+                    <span>Target Number:</span>
+                    <span id="receiptPhone"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Provider:</span>
+                    <span id="receiptProvider"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Credit Amount:</span>
+                    <span id="receiptAmount"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Service Tax:</span>
+                    <span>Rp 1,200</span>
+                </div>
+                <div class="receipt-item total">
+                    <span>Total Payment:</span>
+                    <span id="receiptTotal"></span>
+                </div>
+            </div>
+            
+            <input 
+                type="text" 
+                id="customerName" 
+                class="customer-input"
+                placeholder="Enter your name"
+            >
+            
+            <div class="modal-actions">
+                <button class="modal-button cancel-btn" onclick="closeModal()">
+                    Cancel
+                </button>
+                <button class="modal-button whatsapp-btn" onclick="sendToWhatsApp()">
+                    Send to WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Provider database with neural-like classification
+        const providerDatabase = {
+            '0838': 'Axis', '0831': 'Axis', '0832': 'Axis', '0833': 'Axis',
+            '0822': 'Telkomsel', '0812': 'Telkomsel', '0813': 'Telkomsel', 
+            '0821': 'Telkomsel', '0811': 'Telkomsel', '0823': 'Telkomsel',
+            '0814': 'Indosat', '0815': 'Indosat', '0816': 'Indosat',
+            '0855': 'Indosat', '0856': 'Indosat', '0857': 'Indosat', '0858': 'Indosat',
+            '0881': 'Smartfren', '0882': 'Smartfren', '0883': 'Smartfren', 
+            '0884': 'Smartfren', '0885': 'Smartfren', '0886': 'Smartfren',
+            '0887': 'Smartfren', '0888': 'Smartfren', '0889': 'Smartfren',
+            '0817': 'XL', '0818': 'XL', '0819': 'XL', '0859': 'XL', 
+            '0877': 'XL', '0878': 'XL',
+            '0896': 'Three', '0897': 'Three', '0898': 'Three', '0899': 'Three', '0895': 'Three'
+        };
+
+        let selectedAmount = null;
+        let detectedProvider = null;
+
+        // Initialize neural background
+        function initializeNeuralBackground() {
+            const neuralBg = document.getElementById('neuralBg');
+            const nodeCount = 20;
+            
+            for (let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.className = 'neural-node';
+                node.style.left = Math.random() * 100 + '%';
+                node.style.top = Math.random() * 100 + '%';
+                node.style.animationDelay = Math.random() * 3 + 's';
+                neuralBg.appendChild(node);
+                
+                // Create connections
+                if (Math.random() > 0.7) {
+                    const connection = document.createElement('div');
+                    connection.className = 'neural-connection';
+                    connection.style.left = Math.random() * 80 + '%';
+                    connection.style.top = Math.random() * 100 + '%';
+                    connection.style.width = Math.random() * 200 + 50 + 'px';
+                    connection.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    connection.style.animationDelay = Math.random() * 4 + 's';
+                    neuralBg.appendChild(connection);
+                }
+            }
+        }
+
+        // Phone input handler with AI-like processing
+        document.getElementById('phoneInput').addEventListener('input', function(e) {
+            const phoneNumber = e.target.value;
+            const detection = document.getElementById('providerDetection');
+            const providerName = document.getElementById('providerName');
+            
+            if (phoneNumber.length >= 4) {
+                const prefix = phoneNumber.substring(0, 4);
+                const provider = providerDatabase[prefix];
+                
+                detection.classList.add('active');
+                
+                if (provider) {
+                    detectedProvider = provider;
+                    // Simulate AI processing delay
+                    providerName.textContent = 'Processing...';
+                    setTimeout(() => {
+                        providerName.textContent = provider + ' Network';
+                    }, 500);
+                } else {
+                    detectedProvider = 'Unknown';
+                    providerName.textContent = 'Network Unknown';
+                }
+            } else {
+                detection.classList.remove('active');
+                detectedProvider = null;
+            }
+            
+            updateProcessButton();
+        });
+
+        // Denomination selection
+        document.getElementById('denominationGrid').addEventListener('click', function(e) {
+            const card = e.target.closest('.denomination-card');
+            if (!card) return;
+            
+            // Remove previous selection
+            document.querySelectorAll('.denomination-card').forEach(c => 
+                c.classList.remove('selected')
+            );
+            
+            // Select current card
+            card.classList.add('selected');
+            selectedAmount = parseInt(card.dataset.value);
+            
+            updateProcessButton();
+        });
+
+        // Update process button state
+        function updateProcessButton() {
+            const button = document.getElementById('processButton');
+            const phoneNumber = document.getElementById('phoneInput').value;
+            
+            if (phoneNumber.length >= 10 && selectedAmount && detectedProvider && detectedProvider !== 'Unknown') {
+                button.classList.add('active');
+                button.textContent = 'Process Transaction';
+            } else {
+                button.classList.remove('active');
+                button.textContent = 'Initialize Transaction';
+            }
+        }
+
+        // Process transaction
+        document.getElementById('processButton').addEventListener('click', function() {
+            if (!this.classList.contains('active')) return;
+            
+            const phoneNumber = document.getElementById('phoneInput').value;
+            
+            // Update receipt
+            document.getElementById('receiptPhone').textContent = phoneNumber;
+            document.getElementById('receiptProvider').textContent = detectedProvider;
+            document.getElementById('receiptAmount').textContent = `Rp ${selectedAmount.toLocaleString('id-ID')}`;
+            document.getElementById('receiptTotal').textContent = `Rp ${(selectedAmount + 1200).toLocaleString('id-ID')}`;
+            
+            // Show modal
+            document.getElementById('transactionModal').classList.add('show');
+        });
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('transactionModal').classList.remove('show');
+            document.getElementById('customerName').value = '';
+        }
+
+        // Send to WhatsApp
+        function sendToWhatsApp() {
+            const customerName = document.getElementById('customerName').value.trim();
+            
+            if (!customerName) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            const phoneNumber = document.getElementById('phoneInput').value;
+            const total = selectedAmount + 1200;
+            
+            const message = `🤖 *ThomasStore Transaction*\n\n` +
+                          `👤 Customer: ${customerName}\n` +
+                          `📱 Target: ${phoneNumber}\n` +
+                          `📡 Provider: ${detectedProvider}\n` +
+                          `💎 Credit: Rp ${selectedAmount.toLocaleString('id-ID')}\n` +
+                          `🧾 Tax: Rp 1,200\n` +
+                          `💳 Total: Rp ${total.toLocaleString('id-ID')}\n\n` +
+                          `✨ Your transaction has been processed\n` +
+                          `Thank you for buying from ThomasStore! 🙏`;
+            
+            const whatsappUrl = `https://wa.me/081274945189?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            closeModal();
+            resetForm();
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('phoneInput').value = '';
+            document.getElementById('providerDetection').classList.remove('active');
+            document.querySelectorAll('.denomination-card').forEach(c => 
+                c.classList.remove('selected')
+            );
+            selectedAmount = null;
+            detectedProvider = null;
+            updateProcessButton();
+        }
+
+        // Close modal on outside click
+        document.getElementById('transactionModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeNeuralBackground();
+        });
+    </script>
+</body>
+</html>

@@ -350,7 +350,9 @@
             position: relative;
             overflow: hidden;
         }
-
+        .service-card a {
+            text-decoration: none;
+        }
         .service-card::before {
             content: '';
             position: absolute;
